@@ -1,7 +1,10 @@
 import * as React from 'react'
 import './NewChildForm.css';
+import {Alert} from 'react-alert'
+
 
 class NewChildForm extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -10,7 +13,7 @@ class NewChildForm extends React.Component {
             birthdate:'',
             godparentName:''
         };
-
+        console.log("logging works!")
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,7 +27,7 @@ class NewChildForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault()
         const {item} = this.state;
-        await fetch('/addChild',
+        await fetch('/addChild/',
             {
                 method: 'POST',
                 headers: {
@@ -32,8 +35,19 @@ class NewChildForm extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(item),
-            });
-
+            }).then(async response =>{
+                if(!response.ok){
+                    alert("Daten konnten nicht gespeichert werden");
+                }else{
+                    alert("Das Kind mit dem Namen "+this.state.name+" wurde gespeichert");
+                    this.state =  {
+                        name: '',
+                        adress:'',
+                        birthdate:'',
+                        godparentName:''
+                    };
+                }
+        });
     }
 
     render() {
@@ -41,22 +55,22 @@ class NewChildForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <input name = "name" type ="text" value={this.state.name} onChange={this.handleChange} />
                 </label>
                 <br />
                 <label>
-                    Adress:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    Adress
+                    <input name = "adress" type="text" value={this.state.adress} onChange={this.handleChange} />
                 </label>
                 <br />
                 <label>
                     Birthdate:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <input name= "birthdate" type="text" value={this.state.birthdate} onChange={this.handleChange} />
                 </label>
                 <br />
                 <label>
                     Godparent Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                    <input name = "godparentName" type="text" value={this.state.godparentName} onChange={this.handleChange} />
                 </label>
                 <br />
                 <input type="submit" value="Submit" />
