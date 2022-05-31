@@ -1,19 +1,15 @@
 import * as React from 'react'
-import './NewChildForm.css';
-import {Alert} from 'react-alert'
-import ReactDatePicker from "react-datepicker";
-import { useForm ,Controller} from "react-hook-form";
+import './AddChild.css';
 
-class NewChildForm extends React.Component {
+
+class AddChild extends React.Component {
 
     constructor(props) {
         super(props);
-        const { Controller } = useForm();
         this.state = {
             name: '',
             address:'',
             birthdate:'',
-            godparentName:''
         };
         console.log("logging works!")
         this.handleChange = this.handleChange.bind(this);
@@ -29,7 +25,7 @@ class NewChildForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault()
         const item = this.state;
-        await fetch('/addChild/',
+        await fetch('/child/add/',
             {
                 method: 'POST',
                 headers: {
@@ -45,8 +41,7 @@ class NewChildForm extends React.Component {
                     this.setState(  {
                         name: '',
                         adress:'',
-                        birthdate:'',
-                        godparentName:''
+                        birthdate:''
                     });
                 }
         });
@@ -61,26 +56,13 @@ class NewChildForm extends React.Component {
                 </label>
                 <br />
                 <label>
-                    Adress
+                    Adresse:
                     <input name = "address" type="text" value={this.state.adress} onChange={this.handleChange} />
                 </label>
                 <br />
                 <label>
-                    Birthdate:
-                    <Controller
-                        as={ReactDatePicker}
-                        control={control}
-                        valueName="birthdate" // DateSelect value's name is selected
-                        onChange={this.handleChange()}
-                        name="ReactDatepicker"
-                        className="input"
-                        placeholderText="Select date"
-                    />
-                </label>
-                <br />
-                <label>
-                    Godparent Name:
-                    <input name = "godparentName" type="text" value={this.state.godparentName} onChange={this.handleChange} />
+                    Geburtsdatum:
+                    <input name = "birthdate" type="date" value={this.state.birthdate} onChange={this.handleChange} />
                 </label>
                 <br />
                 <input type="submit" value="Submit" />
@@ -88,4 +70,4 @@ class NewChildForm extends React.Component {
         );
     }
 }
-export default NewChildForm
+export default AddChild
