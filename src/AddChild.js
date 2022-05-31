@@ -1,7 +1,9 @@
 import * as React from 'react'
 import './AddChild.css';
 
-
+/**
+ * Forms for creating a new child entry
+ */
 class AddChild extends React.Component {
 
     constructor(props) {
@@ -22,6 +24,11 @@ class AddChild extends React.Component {
         });
     }
 
+    /**
+     * Sends the data of the formular to the addchild api which then gets added to database
+     * @param event gets emitted from clicking the submit button
+     * @returns {Promise<void>}
+     */
     async handleSubmit(event) {
         event.preventDefault()
         const item = this.state;
@@ -52,17 +59,17 @@ class AddChild extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-                    <input name = "name" type ="text" value={this.state.name} onChange={this.handleChange} />
+                    <input name = "name" type ="text" value={this.state.name} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
                     Adresse:
-                    <input name = "address" type="text" value={this.state.adress} onChange={this.handleChange} />
+                    <input name = "address" type="text" value={this.state.adress} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
                     Geburtsdatum:
-                    <input name = "birthdate" type="date" value={this.state.birthdate} onChange={this.handleChange} />
+                    <input name = "birthdate" type="date" value={this.state.birthdate} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <input type="submit" value="Submit" />

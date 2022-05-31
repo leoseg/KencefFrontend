@@ -1,7 +1,9 @@
 import * as React from 'react'
 
 
-
+/**
+ * Forms for creating a new godparent entry
+ */
 class AddGodParent extends React.Component {
 
     constructor(props) {
@@ -21,6 +23,10 @@ class AddGodParent extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * handles change of input, if its from the select field loops trough options and add selected options to state
+     * @param event gets emitted trough change of input in forms
+     */
     handleChange(event) {
         if (event.target instanceof  HTMLSelectElement){
             var options = event.target.options;
@@ -40,6 +46,11 @@ class AddGodParent extends React.Component {
         }
     }
 
+
+    /**
+     * While mounting fetch childs from database for the select options
+     * @returns {Promise<void>}
+     */
     async componentDidMount() {
         const response = await fetch('/child/get/');
         this.childsList = await response.json();
@@ -48,6 +59,11 @@ class AddGodParent extends React.Component {
         }
     }
 
+    /**
+     * Sends the data of the formular to the addgodparent api which then gets added to database
+     * @param event gets emitted from clicking the submit button
+     * @returns {Promise<void>}
+     */
     async handleSubmit(event) {
         event.preventDefault()
         const item = this.state;
@@ -81,22 +97,22 @@ class AddGodParent extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-                    <input name = "name" type ="text" value={this.state.name} onChange={this.handleChange} />
+                    <input name = "name" type ="text" value={this.state.name} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
                     Email:
-                    <input name = "email" type="text" value={this.state.email} onChange={this.handleChange} />
+                    <input name = "email" type="text" value={this.state.email} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
                     Zahlungsdatum:
-                    <input name = "paydate" type="date" value={this.state.paydate} onChange={this.handleChange} />
+                    <input name = "paydate" type="date" value={this.state.paydate} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
                     Zu zahlender Betrag:
-                    <input name = "amount_to_pay" type="text" value={this.state.amountToPay} onChange={this.handleChange} />
+                    <input name = "amount_to_pay" type="text" value={this.state.amountToPay} onChange={this.handleChange} required />
                 </label>
                 <br />
                 <label>
