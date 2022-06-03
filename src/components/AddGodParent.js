@@ -52,7 +52,7 @@ class AddGodParent extends React.Component {
      * @returns {Promise<void>}
      */
     async componentDidMount() {
-        const response = await fetch('/child/get/');
+        const response = await fetch('/child/getallwithoutparent/');
         this.childsList = await response.json();
         if (!response.ok){
             console.log("Error while retrieving list of childs from database with status text: "+response.statusText)
